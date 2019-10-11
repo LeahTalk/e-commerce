@@ -1,0 +1,39 @@
+@model Product
+<div style = 'display: inline-block; vertical-align: top; width: 200px'>
+    <h4>Add a new product</h4>
+    <form asp-action="CreateProduct" asp-controller="Home" method="post">
+        <span asp-validation-for="Name"></span>
+        <p></p>
+        <label asp-for="Name"></label>
+        <input type="text" asp-for="Name" style = 'width: 100%'>
+        <p></p>
+        <label asp-for="Image"></label>
+        <input type="text" asp-for="Image" style = 'width: 100%'>
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" style = 'width: 100%;'></textarea>
+        <select asp-for="Stock">
+            @{
+                for(int i = 1; i <= 100; i++) {
+                    <option value=@i>@i</option>
+                }
+            }
+        </select>
+        <input type="submit" value="Submit" class = 'btn btn-primary'>
+    </form>
+</div>
+<div style = 'display: inline-block; vertical-align: top; width: 900px'>
+    @{
+        foreach(Product product in ViewBag.products) {
+            <div style = 'width: 200px; height: 200px; margin: 10px; display: inline-block; text-align:center'>
+                @if(@product.Image == null) {
+                    <img height = '100px' src = 'https://cdn4.iconfinder.com/data/icons/shopping-21/64/shopping-01-512.png' alt = 'shopping cart'>
+                }
+                else {
+                    <img height = '100px' src = '@product.Image' alt = '@product.Name'>
+                }
+                <p>@product.Name</p>
+                <p style = 'margin-top: -20px'>(@product.Stock) left</p>
+            </div>
+        }
+    }
+</div>

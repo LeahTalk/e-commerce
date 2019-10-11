@@ -1,0 +1,53 @@
+@model Transaction
+<h1>Add a new order</h1>
+<form asp-action="CreateTransaction" asp-controller="Home" method="post" style = 'margin-bottom: 50px'>
+    <label>Customer Name:</label>
+    <select asp-for="CustomerId">
+        @{
+            foreach(Customer customer in ViewBag.customers) {
+                <option value=@customer.CustomerId>@customer.Name</option>
+            }
+        }
+    </select>
+    <span style='color:red' asp-validation-for="Quantity"></span>
+    <p></p>
+    <label>Quantity:</label>
+    <select asp-for="Quantity">
+        @{
+            for(int i = 1; i <= 15; i++) {
+                <option value=@i>@i</option>
+            }
+        }
+    </select>
+    <label>Product:</label>
+    <select asp-for="ProductId">
+        @{
+            foreach(Product product in ViewBag.products) {
+                <option value=@product.ProductId>@product.Name</option>
+            }
+        }
+    </select>
+    <input type="submit" value="Submit" class = 'btn btn-primary'>
+</form>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Customer Name</th>
+      <th scope="col">Product</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+      @{
+          foreach(Transaction transaction in ViewBag.transactions) {
+            <tr>
+                <td>@transaction.Customer.Name</td>
+                <td>@transaction.Product.Name</td>
+                <td>@transaction.Quantity</td>
+                <td>@transaction.CreatedAt.ToString("MMMM dd, yyyy")</td>
+            </tr>
+          }
+      }
+  </tbody>
+</table>

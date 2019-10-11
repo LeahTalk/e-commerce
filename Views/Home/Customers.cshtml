@@ -1,0 +1,29 @@
+@model Customer
+<h1>Add a new customer</h1>
+<form asp-action="CreateCustomer" asp-controller="Home" method="post" style = 'margin-bottom: 50px'>
+    <span asp-validation-for="Name"></span>
+    <p></p>
+    <label asp-for="Name"></label>
+    <input type="text" asp-for="Name">
+    <input type="submit" value="Submit" class = 'btn btn-primary'>
+</form>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Customer Name</th>
+      <th scope="col">Created Date</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+      @{
+          foreach(Customer customer in ViewBag.customers) {
+            <tr>
+                <td>@customer.Name</td>
+                <td>@customer.CreatedAt.ToString("MMMM dd, yyyy")</td>
+                <td><a class = 'btn btn-danger' href = '/customers/delete/@customer.CustomerId'>Delete</a></td>
+            </tr>
+          }
+      }
+  </tbody>
+</table>
